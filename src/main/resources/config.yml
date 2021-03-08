@@ -1,0 +1,19 @@
+#
+# If enabled, NametagEdit will turn your console into spam
+# heaven. Useful for reporting issues!
+debug: false
+#
+# If enabled, NametagEdit will use database support
+mysql:
+  hostname: localhost
+  port: 3306
+  username: myUsername
+  password: myPassword
+  database: myDatabase
+  tablePrefix: myinv_
+  # Minimum connection pool size
+  # WARNING: If you have no idea what this is for, do not change.
+  # To see the optimal connections for your setup, please visit:
+  # https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing
+  # And review the pool size configuration (Tn x (Cm - 1) + 1)
+  maxPoolSize: 10
