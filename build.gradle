@@ -1,22 +1,22 @@
 buildscript {
-    repositories {
-        jcenter()
-        mavenCentral()
-    }
+  repositories {
+    jcenter()
+    mavenCentral()
+  }
 }
 
 plugins {
-    id 'com.github.johnrengelman.shadow' version '6.1.0'
-    id 'kr.entree.spigradle' version '2.2.3'
-    id 'java'
-    id 'jacoco'
-    id 'idea'
+  id 'com.github.johnrengelman.shadow' version '6.1.0'
+  id 'kr.entree.spigradle' version '2.2.3'
+  id 'java'
+  id 'jacoco'
+  id 'idea'
 }
 
 apply from: "$rootDir/gradle/publish.gradle"
 
 if (project.hasProperty("local_script")) {
-    apply from: file(local_script + "/build.local.gradle")
+  apply from: file(local_script + "/build.local.gradle")
 }
 
 sourceCompatibility = '1.8'
@@ -24,58 +24,78 @@ targetCompatibility = '1.8'
 compileJava.options.encoding 'UTF-8'
 
 ext {
-    mcVersion = project.property("mcVersion")
+  mcVersion = project.property("mcVersion")
+  libDir = "$rootDir/libs"
 }
 
 group project.property("group")
 
 spigot {
-    name = project.property("pluginName")
-    authors = [project.property("author")]
-    apiVersion = project.property("apiVersion")
-    load = STARTUP
-    commands {
-        myinv {
-            description 'Admin command.'
-            permission 'myinventory.admin'
-        }
-        kd {
-            description 'Player command.'
-            permission 'myinventory.use'
-        }
+  name = project.property("pluginName")
+  authors = [project.property("author")]
+  apiVersion = project.property("apiVersion")
+  commands {
+    oregen {
+      description 'Admin command.'
+      permission 'oregen.admin'
     }
-    //    depends = ['']
+  }
+  softDepends = ['PlaceholderAPI', 'ASkyBlock', 'AcidIsland', 'uSkyBlock', 'SkyBlock', 'BentoBox', 'IslandWorld', 'SuperiorSkyblock2', 'FabledSkyBlock']
 }
 
 compileJava {
-    options.encoding = 'UTF-8'
-    options.compilerArgs += ["-parameters"]
-    options.fork = true
-    options.forkOptions.executable = 'javac'
+  options.encoding = 'UTF-8'
+  options.compilerArgs += ["-parameters"]
+  options.fork = true
+  options.forkOptions.executable = 'javac'
 }
 
 archivesBaseName = project.property("pluginName")
 
 repositories {
-    mavenCentral()
-    jcenter()
-    protocolLib()
-    spigot()
-    maven { url = 'https://jitpack.io' }
+  mavenCentral()
+  jcenter()
+  protocolLib()
+  spigot()
+  maven { url = uri("https://mvn.intellectualsites.com/content/groups/public/") } // PlotSquared
+  maven { url = 'https://jitpack.io' }
+  maven { url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
 }
 
 dependencies {
-    compileOnly spigot(mcVersion)
+  compileOnly spigot(mcVersion)
+  // PlaceholderAPI
+  compileOnly 'me.clip:placeholderapi:2.10.9'
+  // ASkyBlock
+  implementation files("$libDir/askyblock-3.0.9.1 RC.jar")
+  implementation files("$libDir/acidisland-3.0.9.1 RC.jar")
+  // uSkyBlock
+  implementation files("$libDir/uSkyBlock-bukkit1.13-2.7.6-RC3.jar")
+  // IslandWorld
+  implementation files("$libDir/IslandWorld-16.3.2.jar")
+  // BentoBox
+  implementation files("$libDir/BentoBox-1.16.0.jar")
+  implementation files("$libDir/BentoBox-Level-2.6.1.jar")
+  // SuperiorSkyblock
+  implementation files("$libDir/SuperiorSkyblock-1.5.2.jar")
+  // PlotSquared
+  implementation files("$libDir/PlotSquared-Bukkit-5.13.11.jar")
+  // PlotSquared Lecgacy
+  implementation files("$libDir/PlotSquared-Bukkit-3.823.jar")
+  // Lands
+  implementation files("$libDir/Lands-5.1.12.jar")
+  // FabledSkyblock
+  implementation files("$libDir/fabledskyblock-2.1.0.jar")
 
-    //Add dependencies here
-    implementation 'com.zaxxer:HikariCP:3.4.5'
+  //Add dependencies here
+  implementation 'com.zaxxer:HikariCP:3.4.5'
 }
 
 shadowJar {
-    dependencies {
-        include(dependency('com.zaxxer:HikariCP:3.4.5'))
-    }
-//    relocate 'co.aikar.commands', "${packageName}.acf"
+  dependencies {
+    include(dependency('com.zaxxer:HikariCP:3.4.5'))
+  }
+//  relocate 'co.aikar.commands', "${packageName}.acf"
 //    relocate 'co.aikar.locales', "${packageName}.locales"
 }
 
@@ -84,8 +104,8 @@ tasks.publish.dependsOn(shadowJar)
 tasks.prepareSpigotPlugins.dependsOn(shadowJar)
 
 processResources {
-    project.properties.put("version", this.version)
-    expand project.properties
+  project.properties.put("version", this.version)
+  expand project.properties
 }
 
 defaultTasks 'build'

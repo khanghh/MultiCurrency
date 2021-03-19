@@ -14,13 +14,61 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e6e867a5-d39f-4f58-823c-a7454a7d741e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/oregen/GeneratorManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/oregen/OreGenerator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/oregen/hooks/HookASkyBlock.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/oregen/hooks/HookAcidIsland.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/oregen/hooks/HookFabledSkyblock.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/oregen/hooks/HookInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/oregen/hooks/HookIslandWorld.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/oregen/hooks/HookPlotSquared.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/oregen/hooks/HookPlotSquaredLegacy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/oregen/hooks/HookSuperiorSkyblock.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/oregen/hooks/HookVanilla.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/oregen/hooks/HookuSkyBlock.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/oregen/hooks/SkyBlockAPICached.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/oregen/hooks/SkyblockAPIHook.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/oregen/misc/NamePlaceholder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.project" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.settings/org.eclipse.buildship.core.prefs" beforeDir="false" afterPath="$PROJECT_DIR$/.settings/org.eclipse.buildship.core.prefs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/minuskube/inv/SmartInventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/minuskube/inv/SmartInventory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/minuskube/inv/SmartInvsPlugin.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/khanghoang/myinventory/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/myinventory/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/me/khanghoang/myinventory/MainTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/minuskube/inv/ClickableItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/smartinv/ClickableItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/minuskube/inv/InventoryListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/smartinv/InventoryListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/minuskube/inv/InventoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/smartinv/InventoryManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/minuskube/inv/ItemClickData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/smartinv/ItemClickData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/minuskube/inv/SmartInventory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/smartinv/SmartInventory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/minuskube/inv/content/InventoryContents.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/smartinv/content/InventoryContents.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/minuskube/inv/content/InventoryProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/smartinv/content/InventoryProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/minuskube/inv/content/Pagination.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/smartinv/content/Pagination.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/minuskube/inv/content/SlotIterator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/smartinv/content/SlotIterator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/minuskube/inv/content/SlotPos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/smartinv/content/SlotPos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/minuskube/inv/opener/ChestInventoryOpener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/smartinv/opener/ChestInventoryOpener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/minuskube/inv/opener/InventoryOpener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/smartinv/opener/InventoryOpener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/minuskube/inv/opener/SpecialInventoryOpener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/smartinv/opener/SpecialInventoryOpener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/minuskube/inv/util/Pattern.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/smartinv/util/Pattern.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/khanghoang/myinventory/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/oregen/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/khanghoang/myinventory/MyInventoryManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/khanghoang/myinventory/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/oregen/Utils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/khanghoang/myinventory/commands/AdminCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/oregen/commands/OreGenCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/khanghoang/myinventory/commands/MyInventoryMessage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/khanghoang/myinventory/commands/PlayerCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/khanghoang/myinventory/config/Configuration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/oregen/config/Configuration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/khanghoang/myinventory/config/YamlConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/oregen/config/YamlConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/khanghoang/myinventory/listeners/InventoryEventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/oregen/listeners/InventoryEventListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/khanghoang/myinventory/listeners/PlayerEventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/oregen/listeners/OreGenListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/khanghoang/myinventory/providers/LargeChestProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/oregen/chestgui/LargeChestProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/khanghoang/myinventory/providers/MainInventoryProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/khanghoang/oregen/providers/MainInventoryProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/khanghoang/myinventory/storage/IDataStorage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/khanghoang/myinventory/storage/MySQLStorage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/khanghoang/myinventory/storage/TestStorage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/khanghoang/myinventory/storage/mysql/DatabaseUpdateTask.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/khanghoang/myinventory/storage/mysql/DatabaseUpdateTask2.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,18 +91,7 @@
             <expand>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="MyInventory" type="f1a62948:ProjectNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="MyInventory" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="MyInventory" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="build" type="c8890929:TasksNode$1" />
+                <item name="AdvancedOreGen" type="f1a62948:ProjectNode" />
               </path>
             </expand>
             <select />
@@ -62,6 +99,13 @@
         </projects_view>
       </state>
     </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -74,26 +118,29 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/me/khanghoang/oregen/misc" />
     <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
-  <component name="RunManager" selected="Gradle.MyInventory [build]">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MyInventory [assemble]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="me.khanghoang.oregen.commands" />
+      <recent name="me.khanghoang.oregen" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/me/khanghoang/oregen/misc" />
+      <recent name="$PROJECT_DIR$/libs" />
+      <recent name="$PROJECT_DIR$/src/main/java/me/khanghoang/oregen" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Gradle.AdvancedOreGen [build]">
+    <configuration name="AdvancedOreGen [assemble]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -112,7 +159,7 @@
       <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="MyInventory [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="AdvancedOreGen [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -131,7 +178,7 @@
       <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="MyInventory [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="AdvancedOreGen [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -150,7 +197,7 @@
       <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="MyInventory [shadowJar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="AdvancedOreGen [shadowJar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -169,6 +216,53 @@
       <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="MyInventory" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="MyInventory" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="RemoteSpigot" type="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
@@ -180,10 +274,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.MyInventory [shadowJar]" />
-        <item itemvalue="Gradle.MyInventory [assemble]" />
-        <item itemvalue="Gradle.MyInventory [clean]" />
-        <item itemvalue="Gradle.MyInventory [build]" />
+        <item itemvalue="Gradle.AdvancedOreGen [build]" />
+        <item itemvalue="Gradle.AdvancedOreGen [shadowJar]" />
+        <item itemvalue="Gradle.AdvancedOreGen [assemble]" />
+        <item itemvalue="Gradle.AdvancedOreGen [clean]" />
       </list>
     </recent_temporary>
   </component>
@@ -198,7 +292,13 @@
       <workItem from="1615131485392" duration="17000" />
       <workItem from="1615131506614" duration="1645000" />
       <workItem from="1615133484106" duration="3269000" />
-      <workItem from="1615163533404" duration="3863000" />
+      <workItem from="1615163533404" duration="15150000" />
+      <workItem from="1615186207149" duration="776000" />
+      <workItem from="1615290116250" duration="385000" />
+      <workItem from="1615889513424" duration="154000" />
+      <workItem from="1615889839138" duration="15527000" />
+      <workItem from="1615985759738" duration="13162000" />
+      <workItem from="1616064805456" duration="119000" />
     </task>
     <servers />
   </component>
@@ -218,29 +318,65 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="653" y="238" key="#com.intellij.ide.util.MemberChooser" timestamp="1615921827841">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="653" y="238" key="#com.intellij.ide.util.MemberChooser/0.0.1680.1050@0.0.1680.1050" timestamp="1615921827841" />
     <state x="421" y="34" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1615132062761">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="421" y="34" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1615132062761" />
-    <state width="1638" height="287" key="GridCell.Tab.0.bottom" timestamp="1615168065554">
+    <state x="586" y="376" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1615168260661">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="287" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1615168065554" />
-    <state width="1638" height="287" key="GridCell.Tab.0.center" timestamp="1615168065549">
+    <state x="586" y="376" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1680.1050@0.0.1680.1050" timestamp="1615168260661" />
+    <state width="1638" height="354" key="GridCell.Tab.0.bottom" timestamp="1615947162556">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="287" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1615168065549" />
-    <state width="1638" height="287" key="GridCell.Tab.0.left" timestamp="1615168065545">
+    <state width="1638" height="354" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1615947162556" />
+    <state width="1638" height="354" key="GridCell.Tab.0.center" timestamp="1615947162555">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="287" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1615168065545" />
-    <state width="1638" height="287" key="GridCell.Tab.0.right" timestamp="1615168065552">
+    <state width="1638" height="354" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1615947162555" />
+    <state width="1638" height="354" key="GridCell.Tab.0.left" timestamp="1615947162554">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="287" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1615168065552" />
+    <state width="1638" height="354" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1615947162554" />
+    <state width="1638" height="354" key="GridCell.Tab.0.right" timestamp="1615947162555">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1638" height="354" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1615947162555" />
+    <state width="1638" height="354" key="GridCell.Tab.1.bottom" timestamp="1615947162557">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1638" height="354" key="GridCell.Tab.1.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1615947162557" />
+    <state width="1638" height="354" key="GridCell.Tab.1.center" timestamp="1615947162556">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1638" height="354" key="GridCell.Tab.1.center/0.0.1680.1050@0.0.1680.1050" timestamp="1615947162556" />
+    <state width="1638" height="354" key="GridCell.Tab.1.left" timestamp="1615947162556">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1638" height="354" key="GridCell.Tab.1.left/0.0.1680.1050@0.0.1680.1050" timestamp="1615947162556" />
+    <state width="1638" height="354" key="GridCell.Tab.1.right" timestamp="1615947162557">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1638" height="354" key="GridCell.Tab.1.right/0.0.1680.1050@0.0.1680.1050" timestamp="1615947162557" />
     <state x="341" y="164" key="SettingsEditor" timestamp="1615161674279">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="341" y="164" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1615161674279" />
+    <state width="500" height="445" key="SwitcherDM" timestamp="1615997168139">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="500" height="445" key="SwitcherDM/0.0.1680.1050@0.0.1680.1050" timestamp="1615997168139" />
+    <state x="541" y="280" width="598" height="490" key="find.popup" timestamp="1615170035513">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="541" y="280" width="598" height="490" key="find.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1615170035513" />
+    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup" timestamp="1615991890784">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1615991890784" />
   </component>
 </project>
