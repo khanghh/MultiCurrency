@@ -1,5 +1,6 @@
 package me.khanghoang.oregen;
 
+import me.khanghoang.oregen.chestgui.OreGenGUIManager;
 import me.khanghoang.oregen.commands.OreGenCommand;
 import me.khanghoang.oregen.config.Configuration;
 import me.khanghoang.oregen.hooks.HookInfo;
@@ -21,6 +22,7 @@ public class Main extends JavaPlugin {
     private SkyBlockAPICached skyBlockAPICached;
     private Configuration config;
     private GeneratorManager manager;
+    private OreGenGUIManager guiManager;
 
     private SkyblockAPIHook getSkyBlockAPI() {
         SkyblockAPIHook skyblockAPI = null;
@@ -52,7 +54,8 @@ public class Main extends JavaPlugin {
         return config;
     }
 
-    public Configuration loadConfig(String fileName) {
+    public Configuration loadConfig() {
+        String fileName = "config.yml";
         File configFile = new File(getDataFolder(), fileName);
         if (!configFile.exists()) {
             saveDefaultConfig();
@@ -79,10 +82,15 @@ public class Main extends JavaPlugin {
         return manager;
     }
 
+    public OreGenGUIManager getGUIManager() {
+        return this.guiManager;
+    }
+
     @Override
     public void onEnable() {
-        this.config = loadConfig("config.yml");
+        this.config = loadConfig();
         this.manager = new GeneratorManager(this);
+        this.guiManager = new OreGenGUIManager(this);
         this.skyBlockAPICached = new SkyBlockAPICached(getSkyBlockAPI());
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new OreGenListener(this), this);

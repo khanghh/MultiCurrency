@@ -8,6 +8,7 @@ import me.khanghoang.oregen.Utils;
 public enum OreGenMessage {
     DEBUG_TOGGLED("debug has been %s"),
     NO_PERMISSION("You do not have permission to use this."),
+    NOT_PLAYER("You must be a player to execute this command."),
     CONFIG_RELOADED("Config reloaded!");
 
     public static final String PREFIX = "&a[AdvancedOreGen] &7» &a";

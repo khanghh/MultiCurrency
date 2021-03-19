@@ -1,12 +1,15 @@
 # AdvancedOregen 1.0.1 developed by khanghoang
 # Note: All the spawnrates should be less than 1.0 and the sum of them should be equals 1.0.
 # The permission of each generator is starts with 'oregen.' and follow by its name (e.g 'oregen.vip').
-# It must have one default generator. The default generator do not need any permission.
+# It must have one default generator. The default generator does not need any permission.
 
 # Run plugin in debug mode
 debug: false
 
-# Generators config
+# Here you can define your ore generator machine.
+# The placeholders available are %oregen_label%, %oregen_name%, %oregen_permission%. 
+# You need to install PlaceholderAPI to get it to work.
+# The islandLevel attribute is the minimum insland level required to make the generator works.
 generators:
   default:
     label: ""

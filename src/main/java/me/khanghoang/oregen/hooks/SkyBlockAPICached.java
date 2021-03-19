@@ -2,7 +2,6 @@ package me.khanghoang.oregen.hooks;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
@@ -18,7 +17,6 @@ import org.bukkit.block.Block;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import com.google.common.collect.Maps;
 
 public class SkyBlockAPICached {
 	private SkyblockAPIHook hook;

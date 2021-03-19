@@ -1,6 +1,5 @@
 package me.khanghoang.oregen.commands;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -73,8 +72,15 @@ public class OreGenCommand implements CommandExecutor, TabExecutor {
                 OreGenMessage.DEBUG_TOGGLED.send(sender, plugin.getConfig().isDebug() ? "&aENABLED" : "&cDISABLED");
                 return true;
             case "reload":
+                plugin.loadConfig();
                 plugin.getManager().reloadConfig();
                 OreGenMessage.CONFIG_RELOADED.send(sender);
+                return true;
+            case "edit": 
+                if (!(sender instanceof Player)) {
+                    OreGenMessage.NOT_PLAYER.send(sender);
+                }
+                plugin.getGUIManager().getGeneratorListGUI().open((Player)sender);
                 return true;
             default:
                 sendUsage(sender);

@@ -171,7 +171,7 @@ public class InventoryManager {
                         .filter(listener -> listener.getType() == InventoryClickEvent.class)
                         .forEach(listener -> ((InventoryListener<InventoryClickEvent>) listener).accept(event));
 
-                invContents.get(slot).ifPresent(item -> item.run(new ItemClickData(event, player, event.getCurrentItem(), slot)));
+                invContents.get(slot).ifPresent(item -> item.run(event));
 
                 // Don't update if the clicked slot is editable - prevent item glitching
                 if(!invContents.isEditable(slot)) {

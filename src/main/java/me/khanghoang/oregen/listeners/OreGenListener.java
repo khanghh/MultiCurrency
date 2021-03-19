@@ -67,11 +67,6 @@ public class OreGenListener implements Listener {
         BlockType fromType = this.getType(fromBlock);
         if (fromType != BlockType.WATER && fromType != BlockType.WATER_STAT) return;
 
-        // fix for (lava -> water)
-        // if (fromType == BlockType.LAVA || fromType == BlockType.LAVA_STAT) {
-        //     if (!isSurroundedByWater(toBlock)) return;
-        // }
-
         BlockType contactType = getContactType(toBlock);
         if (contactType == null) return;
         

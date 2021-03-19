@@ -13,9 +13,9 @@ import org.bukkit.inventory.ItemStack;
 /**
  * @author khanghh on 2021/02/21
  */
-public class LargeChestProvider implements InventoryProvider {
+public class GeneratorEditProvider implements InventoryProvider {
 
-    public LargeChestProvider() {
+    public GeneratorEditProvider() {
     }
 
     @Override
@@ -31,9 +31,9 @@ public class LargeChestProvider implements InventoryProvider {
 
         pagination.addToIterator(contents.newIterator(SlotIterator.Type.HORIZONTAL, 1, 1));
 
-        contents.set(5, 0, ClickableItem.from(new ItemStack(Material.ARROW),
+        contents.set(5, 0, ClickableItem.of(new ItemStack(Material.ARROW),
                 e -> contents.inventory().open(player, pagination.previous().getPage())));
-        contents.set(5, 8, ClickableItem.from(new ItemStack(Material.ARROW),
+        contents.set(5, 8, ClickableItem.of(new ItemStack(Material.ARROW),
                 e -> contents.inventory().open(player, pagination.next().getPage())));
     }
 

@@ -8,7 +8,6 @@ import org.bukkit.block.Block;
 
 import com.bgsoftware.superiorskyblock.api.SuperiorSkyblockAPI;
 
-
 public class HookSuperiorSkyblock implements SkyblockAPIHook {
 
 

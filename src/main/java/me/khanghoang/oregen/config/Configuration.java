@@ -56,12 +56,14 @@ public class Configuration extends YamlConfig {
     public List<OreGenerator> getGenerators() {
         List<OreGenerator> generators = new ArrayList<>();
         ConfigurationSection genCfg = this.getConfigurationSection("generators");
+        if (genCfg == null) return generators;
         int rank = 1;
         for (String name : genCfg.getKeys(false)) {
             String label = genCfg.getString(name + ".label");
-            int unlock_islandLevel = genCfg.getInt(name + ".unlock_islandLevel", 0);
+            int unlock_islandLevel = genCfg.getInt(name + ".islandLevel", 0);
             Set<OreBlock> blocks = new HashSet<>();
             ConfigurationSection blocksCfg = genCfg.getConfigurationSection(name + ".blocks");
+            if (blocksCfg == null) continue;
             for (String blockName : blocksCfg.getKeys(false)) {
                 double chance = blocksCfg.getDouble(blockName, 0.0);
                 blocks.add(new OreBlock(blockName, chance));

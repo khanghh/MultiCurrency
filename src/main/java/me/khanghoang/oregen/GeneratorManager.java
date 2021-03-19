@@ -2,6 +2,7 @@ package me.khanghoang.oregen;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 import me.khanghoang.oregen.config.YamlConfig;
@@ -13,6 +14,7 @@ import java.util.UUID;
 import java.io.File;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 /**
  * @author khanghh on 2021/03/17
  */
@@ -49,31 +51,33 @@ public class GeneratorManager {
         }
     }
 
+    private OreGenerator findGeneratorByName(String genName) {
+        if (genName == null) return defaulGenerator;
+        for (OreGenerator generator: generators) {
+            if (generator.name == genName) {
+                return generator;
+            }
+        }
+        return defaulGenerator;
+    }
+
     private void loadPlayerConfig() {
         String fileName = "players.yml";
         File configFile = new File(plugin.getDataFolder(), fileName);
-        this.playersConfig = new YamlConfig(configFile);
+        playersConfig = new YamlConfig(configFile);
         if (!configFile.exists()) {
             plugin.saveResource(fileName, false);
         }
-        this.playersConfig.load();
+        playersConfig.load();
+        ConfigurationSection playersCfg = playersConfig.getConfigurationSection("players");
+        if (playersCfg == null) return;
+        for (String uuidStr : playersCfg.getKeys(false)) {
+            String genName = playersCfg.getString(uuidStr + ".generator");
+            OreGenerator generator = findGeneratorByName(genName);
+            addCachedGenerator(UUID.fromString(uuidStr), generator);
+        }
     }
     
-    private OreGenerator getCachedGenerator(UUID pUuid) {
-        long timeNow = System.currentTimeMillis();
-        OreGenerator generator = cachedPlayers.get(pUuid.toString());
-        if (generator != null && timeNow - generator.lastUsed < cacheDuration) {
-            return generator;
-        }
-        return null;
-    }
-
-    private OreGenerator getCachedGeneratorOffline(UUID pUuid) {
-        OreGenerator generator = cachedPlayers.get(pUuid.toString());
-        if (generator != null) return generator;
-        return findGeneratorByName(getPlayerData(pUuid));
-    }
-
     private void addCachedGenerator(UUID pUuid, OreGenerator generator) {
         OreGenerator gen = generator.clone();
         gen.lastUsed = System.currentTimeMillis();
@@ -111,26 +115,23 @@ public class GeneratorManager {
         return defaulGenerator;
     }
 
-    private OreGenerator findGeneratorByName(String genName) {
-        for (OreGenerator generator: generators) {
-            if (generator.name == genName) {
-                return generator;
-            }
-        }
-        return defaulGenerator;
-    }
-
     public List<String> getDisabledWorlds() {
         return disabledWorlds;
     }
 
     public OreGenerator getPlayerGenerator(UUID pUuid) {
-        OreGenerator generator = getCachedGenerator(pUuid);
-        if (generator != null) return generator;
+        // Get generator from cache
+        long timeNow = System.currentTimeMillis();
+        OreGenerator cachedGen = cachedPlayers.get(pUuid.toString());
+        if (cachedGen != null && timeNow - cachedGen.lastUsed < cacheDuration) {
+            return cachedGen;
+        }
+        // if cached generator is not found or expired, find the real generator
+        // and add them to cache
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(pUuid);
         if (offlinePlayer.isOnline()) {
             Player player = offlinePlayer.getPlayer();
-            generator = findPlayerGenerator(player);
+            OreGenerator generator = findPlayerGenerator(player);
             String currentGenName = getPlayerData(pUuid);
             if (!generator.name.equals(currentGenName) && (currentGenName != null || !generator.isDefault)) {
                 savePlayerData(player, generator.name);
@@ -138,8 +139,6 @@ public class GeneratorManager {
             addCachedGenerator(pUuid, generator);
             return generator;
         }
-        generator = getCachedGeneratorOffline(pUuid);
-        addCachedGenerator(pUuid, generator);
-        return generator;
+        return cachedGen != null ? cachedGen : defaulGenerator;
     }
 }
