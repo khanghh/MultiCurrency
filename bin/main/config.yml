@@ -12,7 +12,8 @@ debug: false
 # The islandLevel attribute is the minimum insland level required to make the generator works.
 generators:
   default:
-    label: ""
+    item: "STONE"
+    name: "default generator"
     blocks:
       STONE: 0.5
       SANDSTONE: 0.4
@@ -20,6 +21,8 @@ generators:
     islandLevel: 0
     default: true
   beginer:
+    item: "IRON_BLOCK"
+    name: "Beginer tier"
     label: "&7[B]"
     blocks:
       STONE: 0.2
@@ -27,6 +30,8 @@ generators:
       IRON_ORE: 0.4
     islandLevel: 100
   vip:
+    item: "GOLD_BLOCK"
+    name: "VIP tier"
     label: "&2[V]"
     blocks:
       IRON_ORE: 0.6

@@ -8,7 +8,9 @@ import java.util.*;
 
 public class OreGenerator {
     public Set<OreBlock> blocks;
+    public String genId;
     public String name;
+    public String item;
     public String label;
     public int islandLevel = 0;
     public boolean isDefault = false;
@@ -20,8 +22,17 @@ public class OreGenerator {
         this.name = null;
     }
 
-    public OreGenerator(String name, String label, int islandLevel, Set<OreBlock> blocks, boolean isDefault) {
+    public OreGenerator(String genId, String name, String item) {
+        this.genId = genId;
         this.name = name;
+        this.item = item;
+        this.blocks = new HashSet<>();
+    }
+
+    public OreGenerator(String genId, String name, String item, String label, int islandLevel, Set<OreBlock> blocks, boolean isDefault) {
+        this.genId = genId;
+        this.name = name;
+        this.item = item;
         this.label = label;
         this.islandLevel = islandLevel;
         this.blocks = blocks;
@@ -40,6 +51,6 @@ public class OreGenerator {
     }
 
     public OreGenerator clone() {
-        return new OreGenerator(name, label, islandLevel, blocks, isDefault);
+        return new OreGenerator(genId, name, item, label, islandLevel, blocks, isDefault);
     }
 }

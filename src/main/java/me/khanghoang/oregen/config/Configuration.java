@@ -58,18 +58,21 @@ public class Configuration extends YamlConfig {
         ConfigurationSection genCfg = this.getConfigurationSection("generators");
         if (genCfg == null) return generators;
         int rank = 1;
-        for (String name : genCfg.getKeys(false)) {
-            String label = genCfg.getString(name + ".label");
-            int unlock_islandLevel = genCfg.getInt(name + ".islandLevel", 0);
+        for (String key : genCfg.getKeys(false)) {
+            String name = genCfg.getString(key + ".name");
+            String item = genCfg.getString(key + ".item");
+            String label = genCfg.getString(key + ".label");
+            int islandLevel = genCfg.getInt(key + ".islandLevel", 0);
             Set<OreBlock> blocks = new HashSet<>();
-            ConfigurationSection blocksCfg = genCfg.getConfigurationSection(name + ".blocks");
-            if (blocksCfg == null) continue;
-            for (String blockName : blocksCfg.getKeys(false)) {
-                double chance = blocksCfg.getDouble(blockName, 0.0);
-                blocks.add(new OreBlock(blockName, chance));
+            ConfigurationSection blocksCfg = genCfg.getConfigurationSection(key + ".blocks");
+            if (blocksCfg != null) {
+                for (String blockName : blocksCfg.getKeys(false)) {
+                    double chance = blocksCfg.getDouble(blockName, 0.0);
+                    blocks.add(new OreBlock(blockName, chance));
+                }
             }
-            boolean isDefault = genCfg.getBoolean(name + ".default", false);
-            OreGenerator generator = new OreGenerator(name, label, unlock_islandLevel, blocks, isDefault);
+            boolean isDefault = genCfg.getBoolean(key + ".default", false) || key.equals("default");
+            OreGenerator generator = new OreGenerator(key, name, item, label, islandLevel, blocks, isDefault);
             generator.rank = rank++;
             generators.add(generator);
         }
@@ -79,12 +82,17 @@ public class Configuration extends YamlConfig {
     public void setGenerators(List<OreGenerator> generators) {
         this.set("generators", null);
         for (OreGenerator generator: generators) {
-            String name = generator.name;
-            this.set("generators." + name + ".label", generator.label);
-            this.set("generators." + name + ".islandLevel", generator.islandLevel);
-            this.set("generators." + name + ".default", false);
+            String key = generator.genId;
+            this.set("generators." + key + ".name", generator.name);
+            this.set("generators." + key + ".item", generator.item);
+            this.set("generators." + key + ".label", generator.label);
+            this.set("generators." + key + ".islandLevel", generator.islandLevel);
+            this.set("generators." + key + ".blocks", new String[0]);
             for (OreBlock block : generator.blocks) {
-                this.set("generators." + name + ".blocks." + block.name, block.chance);
+                this.set("generators." + key + ".blocks." + block.name, block.chance);
+            }
+            if (!key.equals("default")) {
+                this.set("generators." + key + ".default", false);
             }
         }
         this.save();

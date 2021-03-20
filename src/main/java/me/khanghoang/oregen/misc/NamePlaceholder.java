@@ -47,13 +47,14 @@ public class NamePlaceholder extends PlaceholderExpansion {
 		
 		OreGenerator generator = plugin.getManager().getPlayerGenerator(player.getUniqueId());
 		switch(label.split("\\.")[1]) {
-			case "label":
 			case "name":
+				return generator.name;
+			case "label":
 				return generator.label;
-			case "level":
-				return String.valueOf(generator.islandLevel);
+            case "item":
+                return generator.item; 
 			case "permission":
-				return String.format("oregen.%s", generator.name);
+				return String.format("oregen.%s", generator.genId);
 		}
 		return null;
 	}

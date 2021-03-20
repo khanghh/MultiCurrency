@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import me.khanghoang.oregen.config.YamlConfig;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.UUID;
@@ -51,16 +52,6 @@ public class GeneratorManager {
         }
     }
 
-    private OreGenerator findGeneratorByName(String genName) {
-        if (genName == null) return defaulGenerator;
-        for (OreGenerator generator: generators) {
-            if (generator.name == genName) {
-                return generator;
-            }
-        }
-        return defaulGenerator;
-    }
-
     private void loadPlayerConfig() {
         String fileName = "players.yml";
         File configFile = new File(plugin.getDataFolder(), fileName);
@@ -72,8 +63,8 @@ public class GeneratorManager {
         ConfigurationSection playersCfg = playersConfig.getConfigurationSection("players");
         if (playersCfg == null) return;
         for (String uuidStr : playersCfg.getKeys(false)) {
-            String genName = playersCfg.getString(uuidStr + ".generator");
-            OreGenerator generator = findGeneratorByName(genName);
+            String genKey = playersCfg.getString(uuidStr + ".generator");
+            OreGenerator generator = findGeneratorById(genKey);
             addCachedGenerator(UUID.fromString(uuidStr), generator);
         }
     }
@@ -88,12 +79,12 @@ public class GeneratorManager {
         return playersConfig.getString("players." + pUuid.toString() + ".generator");
     }
 
-    private void savePlayerData(Player player, String genName ) {
+    private void savePlayerData(Player player, String genId) {
         try {
             readWriteLock.writeLock().lock();
             UUID pUuid = player.getUniqueId();
-            plugin.logDebug("savePlayerData: %s -> %s", pUuid.toString(), genName);
-            playersConfig.set("players." + pUuid.toString() + ".generator", genName);
+            plugin.logDebug("savePlayerData: %s -> %s", pUuid.toString(), genId);
+            playersConfig.set("players." + pUuid.toString() + ".generator", genId);
             playersConfig.set("players." + pUuid.toString() + ".name", player.getName());
             playersConfig.save();
         } finally {
@@ -105,7 +96,7 @@ public class GeneratorManager {
         ListIterator<OreGenerator> it = generators.listIterator(generators.size());
         while(it.hasPrevious()) {
             OreGenerator generator = it.previous();
-            String genPerm = String.format("oregen.%s", generator.name);
+            String genPerm = String.format("oregen.%s", generator.genId);
             int islandLevel = plugin.getSkyBlockAPICached().getIslandLevel(player.getUniqueId());
             if (player.hasPermission(genPerm) &&
                 islandLevel >= generator.islandLevel || generator.isDefault) {
@@ -118,6 +109,43 @@ public class GeneratorManager {
     public List<String> getDisabledWorlds() {
         return disabledWorlds;
     }
+
+    public List<OreGenerator> getGenerators() {
+        return generators;
+    }
+
+    public boolean addOreGenerator(OreGenerator newGen) {
+        boolean exists = generators.stream().filter(gen -> gen.genId.equals(newGen.genId)).findFirst().isPresent();
+        if (!exists) {
+            generators.add(newGen);
+            plugin.getConfig().setGenerators(generators);
+        }
+        return false;
+    }
+
+    public boolean removeOreGenerator(String genId) {
+        Iterator<OreGenerator> it = generators.iterator();
+        while(it.hasNext()) {
+            if (it.next().genId == genId) {
+                it.remove();
+                plugin.logDebug("deleted: %s", genId);
+                plugin.getConfig().setGenerators(generators);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public OreGenerator findGeneratorById(String genId) {
+        if (genId == null) return defaulGenerator;
+        for (OreGenerator generator: generators) {
+            if (generator.genId == genId) {
+                return generator;
+            }
+        }
+        return defaulGenerator;
+    }
+
 
     public OreGenerator getPlayerGenerator(UUID pUuid) {
         // Get generator from cache
@@ -132,9 +160,9 @@ public class GeneratorManager {
         if (offlinePlayer.isOnline()) {
             Player player = offlinePlayer.getPlayer();
             OreGenerator generator = findPlayerGenerator(player);
-            String currentGenName = getPlayerData(pUuid);
-            if (!generator.name.equals(currentGenName) && (currentGenName != null || !generator.isDefault)) {
-                savePlayerData(player, generator.name);
+            String currentGenId = getPlayerData(pUuid);
+            if (!generator.genId.equals(currentGenId) && (currentGenId != null || !generator.isDefault)) {
+                savePlayerData(player, generator.genId);
             }
             addCachedGenerator(pUuid, generator);
             return generator;
