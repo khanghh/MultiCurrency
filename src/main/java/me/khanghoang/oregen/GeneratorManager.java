@@ -46,7 +46,12 @@ public class GeneratorManager {
             defaulGenerator = generators.stream()
                 .filter(gen -> gen.isDefault)
                 .findFirst()
-                .orElse(new OreGenerator());
+                .orElse(null);
+            if (defaulGenerator == null) {
+                defaulGenerator = new OreGenerator("default");
+                defaulGenerator.isDefault = true;
+                generators.add(defaulGenerator);
+            }
         } finally {
             readWriteLock.writeLock().unlock();
         }
@@ -96,17 +101,14 @@ public class GeneratorManager {
     }
 
     private OreGenerator findPlayerGenerator(Player player) {
-        ListIterator<OreGenerator> it = generators.listIterator(generators.size());
-        while(it.hasPrevious()) {
-            OreGenerator generator = it.previous();
-            String genPerm = String.format("oregen.%s", generator.name);
+        List<OreGenerator> candidates = generators.stream().filter(gen -> {
+            String genPerm = String.format("oregen.%s", gen.name);
             int islandLevel = plugin.getSkyBlockAPICached().getIslandLevel(player.getUniqueId());
-            if (player.hasPermission(genPerm) && generator.rank > 0 &&
-                islandLevel >= generator.islandLevel || generator.isDefault) {
-                return generator;
-            }
-        }
-        return defaulGenerator;
+            return gen.rank > 0 && player.hasPermission(genPerm) &&
+                islandLevel >= gen.islandLevel || gen.isDefault;
+        }).sorted((gen, other) -> Integer.compare(gen.rank, other.rank))
+        .collect(Collectors.toList());
+        return candidates.get(0);
     }
 
     public List<String> getDisabledWorlds() {
@@ -114,9 +116,7 @@ public class GeneratorManager {
     }
 
     public List<OreGenerator> getGenerators() {
-        return generators.stream()
-            .sorted((gen, other) -> Integer.compare(gen.rank, other.rank))
-            .collect(Collectors.toList());
+        return generators;
     }
 
     public boolean addOreGenerator(OreGenerator newGen) {

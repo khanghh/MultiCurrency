@@ -44,6 +44,9 @@ public class GeneratorListProvider implements InventoryProvider {
         lore.add(Utils.format("&2Name: &5%s", generator.name));
         lore.add(Utils.format("&2Symbol: %s", generator.symbol));
         lore.add(Utils.format("&2Rank: &f%s", generator.rank));
+        if (generator.rank < 1) {
+            lore.add(Utils.format("&4&oDISABLED"));
+        }
         lore.add(Utils.format("&oLeft click &7&oto edit"));
         lore.add(Utils.format("&oRight click &7&oto remove"));
         itemMeta.setLore(lore);
@@ -80,13 +83,15 @@ public class GeneratorListProvider implements InventoryProvider {
 
     private OreGenerator getNewGenerator() {
         int id = 0;
-        String name = "generator" + id;
         for (OreGenerator generator : plugin.getManager().getGenerators()) {
             if (generator.name.startsWith("generator")) {
                 String idStr = generator.name.replaceAll("generator", "");
-                id = Utils.parseInt(idStr, id + 1);
+                int newId = Utils.parseInt(idStr, 0);
+                if (newId > id) id = newId;
             }
         }
+        id += 1;
+        String name = "generator" + id;
         return new OreGenerator(name);
     }
 

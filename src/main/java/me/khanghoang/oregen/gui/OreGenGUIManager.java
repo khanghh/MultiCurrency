@@ -1,8 +1,5 @@
 package me.khanghoang.oregen.gui;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.bukkit.entity.Player;
 
 import me.khanghoang.oregen.Main;

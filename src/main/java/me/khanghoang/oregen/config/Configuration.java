@@ -93,8 +93,8 @@ public class Configuration extends YamlConfig {
             for (OreBlock block : generator.blocks) {
                 this.set("generators." + name + ".blocks." + block.name, block.chance);
             }
-            if (!name.equals("default")) {
-                this.set("generators." + name + ".default", false);
+            if (generator.isDefault && !name.equals("default")) {
+                this.set("generators." + name + ".default", true);
             }
         }
         this.save();

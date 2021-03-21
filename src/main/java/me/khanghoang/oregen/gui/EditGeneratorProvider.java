@@ -146,7 +146,7 @@ public class EditGeneratorProvider implements InventoryProvider {
     private void drawExit(InventoryContents contents) {
         ItemStack item = new ItemStack(Material.OAK_DOOR, 1);
         ItemMeta itemMeta = item.getItemMeta();
-        itemMeta.setDisplayName("&c&lBack");
+        itemMeta.setDisplayName(Utils.format("&c&lBack"));
         item.setItemMeta(itemMeta);
         contents.set(5, 8, ClickableItem.of(item, event -> {
             Player player = (Player)event.getWhoClicked();

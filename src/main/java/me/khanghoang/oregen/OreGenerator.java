@@ -17,15 +17,11 @@ public class OreGenerator {
     public int rank = 0;
     public long lastUsed = 0;
     
-    public OreGenerator() {
-        this.blocks = new ArrayList<>();
-        this.label = null;
-    }
-
     public OreGenerator(String name) {
         this.name = name;
         this.label = name;
         this.item = "COBBLESTONE";
+        this.rank = -1;
         this.blocks = new ArrayList<>();
     }
 
