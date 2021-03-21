@@ -59,7 +59,7 @@ public class GeneratorListProvider implements InventoryProvider {
         ItemMeta itemMeta = item.getItemMeta();
         itemMeta.setDisplayName(Utils.format("&aAdd new generator"));
         List<String> lores = new ArrayList<>();
-        lores.add("Drop a block here to create new ore generator.");
+        lores.add("Drop a block here to create new generator.");
         itemMeta.setLore(lores);
         item.setItemMeta(itemMeta);
         return item;

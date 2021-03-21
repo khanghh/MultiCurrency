@@ -56,6 +56,7 @@ public class OreGenCommand implements TabExecutor {
         sender.sendMessage(Utils.format("\n&fType a command to get started:"));
         sender.sendMessage(Utils.format("&a/oregen debug &7- Toggle debug mode"));
         sender.sendMessage(Utils.format("&a/oregen reload &7- Reload config"));
+        sender.sendMessage(Utils.format("&a/oregen inspect &7- Inspect generator of player"));
         sender.sendMessage(Utils.format("&a/oregen edit &7- Open edit generators GUI"));
     }
 
