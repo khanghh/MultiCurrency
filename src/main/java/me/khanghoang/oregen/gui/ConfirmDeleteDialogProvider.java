@@ -1,4 +1,4 @@
-package me.khanghoang.oregen.chestgui;
+package me.khanghoang.oregen.gui;
 
 import me.khanghoang.oregen.Main;
 import me.khanghoang.oregen.OreGenerator;
@@ -19,19 +19,18 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class ConfirmDeleteDialogProvider implements InventoryProvider {
 
     private Main plugin;
-    private String genId;
+    private String genName;
 
     private void drawOreGenItem(InventoryContents contents, int row, int column) {
-        OreGenerator generator =  plugin.getManager().findGeneratorById(genId);
+        OreGenerator generator =  plugin.getManager().findGeneratorByName(genName);
         Material itemType = Material.getMaterial(generator.item);
         if (itemType == null) itemType = Material.COBBLESTONE;
         ItemStack item = new ItemStack(itemType, 1);
         ItemMeta itemMeta = item.getItemMeta();
-        itemMeta.setDisplayName(Utils.format(generator.name));
+        itemMeta.setDisplayName(Utils.format(generator.label));
         item.setItemMeta(itemMeta);
         contents.set(row, column, ClickableItem.empty(item));
     }
-
 
     private void drawYesItem(InventoryContents contents, int row, int column) {
         ItemStack item = new ItemStack(Material.RED_STAINED_GLASS_PANE, 1);
@@ -39,9 +38,9 @@ public class ConfirmDeleteDialogProvider implements InventoryProvider {
         itemMeta.setDisplayName(Utils.format("&c&lDelete"));
         item.setItemMeta(itemMeta);
         contents.set(row, column, ClickableItem.of(item, event -> {
-            plugin.getManager().removeOreGenerator(genId);
+            plugin.getManager().removeOreGenerator(genName);
             Player player = (Player)event.getWhoClicked();
-            plugin.getGUIManager().getGeneratorListGUI().open(player);
+            plugin.getGUIManager().openGeneratorListGUI(player);
         }));
     }
 
@@ -52,13 +51,13 @@ public class ConfirmDeleteDialogProvider implements InventoryProvider {
         item.setItemMeta(itemMeta);
         contents.set(row, column, ClickableItem.of(item, event -> {
             Player player = (Player)event.getWhoClicked();
-            plugin.getGUIManager().getGeneratorListGUI().open(player);
+            plugin.getGUIManager().openGeneratorListGUI(player);
         }));
     }
 
-    public ConfirmDeleteDialogProvider(Main plugin, String genId) {
+    public ConfirmDeleteDialogProvider(Main plugin, String genName) {
         this.plugin = plugin;
-        this.genId = genId;
+        this.genName = genName;
     }
 
     @Override

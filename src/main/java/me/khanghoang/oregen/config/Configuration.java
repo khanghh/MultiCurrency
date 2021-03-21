@@ -2,6 +2,8 @@ package me.khanghoang.oregen.config;
 
 import me.khanghoang.oregen.OreBlock;
 import me.khanghoang.oregen.OreGenerator;
+
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.io.File;
@@ -58,21 +60,23 @@ public class Configuration extends YamlConfig {
         ConfigurationSection genCfg = this.getConfigurationSection("generators");
         if (genCfg == null) return generators;
         int rank = 1;
-        for (String key : genCfg.getKeys(false)) {
-            String name = genCfg.getString(key + ".name");
-            String item = genCfg.getString(key + ".item");
-            String label = genCfg.getString(key + ".label");
-            int islandLevel = genCfg.getInt(key + ".islandLevel", 0);
+        for (String name : genCfg.getKeys(false)) {
+            Bukkit.getLogger().info("getGenerators.name: " + name);
+            String item = genCfg.getString(name + ".item");
+            String label = genCfg.getString(name + ".label");
+            String symbol = genCfg.getString(name + ".symbol");
+            int islandLevel = genCfg.getInt(name + ".islandLevel", 0);
             Set<OreBlock> blocks = new HashSet<>();
-            ConfigurationSection blocksCfg = genCfg.getConfigurationSection(key + ".blocks");
+            ConfigurationSection blocksCfg = genCfg.getConfigurationSection(name + ".blocks");
             if (blocksCfg != null) {
                 for (String blockName : blocksCfg.getKeys(false)) {
+                    Bukkit.getLogger().info("getGenerators.blockName: " + blockName);
                     double chance = blocksCfg.getDouble(blockName, 0.0);
                     blocks.add(new OreBlock(blockName, chance));
                 }
             }
-            boolean isDefault = genCfg.getBoolean(key + ".default", false) || key.equals("default");
-            OreGenerator generator = new OreGenerator(key, name, item, label, islandLevel, blocks, isDefault);
+            boolean isDefault = genCfg.getBoolean(name + ".default", false) || name.equals("default");
+            OreGenerator generator = new OreGenerator(name, item, label, symbol, islandLevel, blocks, isDefault);
             generator.rank = rank++;
             generators.add(generator);
         }
@@ -82,17 +86,17 @@ public class Configuration extends YamlConfig {
     public void setGenerators(List<OreGenerator> generators) {
         this.set("generators", null);
         for (OreGenerator generator: generators) {
-            String key = generator.genId;
-            this.set("generators." + key + ".name", generator.name);
-            this.set("generators." + key + ".item", generator.item);
-            this.set("generators." + key + ".label", generator.label);
-            this.set("generators." + key + ".islandLevel", generator.islandLevel);
-            this.set("generators." + key + ".blocks", new String[0]);
+            String name = generator.name ;
+            this.set("generators." + name + ".item", generator.item);
+            this.set("generators." + name + ".label", generator.label);
+            this.set("generators." + name + ".symbol", generator.symbol);
+            this.set("generators." + name + ".islandLevel", generator.islandLevel);
+            this.set("generators." + name + ".blocks", new String[0]);
             for (OreBlock block : generator.blocks) {
-                this.set("generators." + key + ".blocks." + block.name, block.chance);
+                this.set("generators." + name + ".blocks." + block.name, block.chance);
             }
-            if (!key.equals("default")) {
-                this.set("generators." + key + ".default", false);
+            if (!name.equals("default")) {
+                this.set("generators." + name + ".default", false);
             }
         }
         this.save();

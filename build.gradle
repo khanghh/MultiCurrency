@@ -63,32 +63,35 @@ repositories {
 }
 
 dependencies {
+  // Spigot
   compileOnly spigot(mcVersion)
+  // ProtocolLib
+  compileOnly "com.comphenix.protocol:ProtocolLib:4.6.0";
   // PlaceholderAPI
   compileOnly 'me.clip:placeholderapi:2.10.9'
   // ASkyBlock
-  implementation files("$libDir/askyblock-3.0.9.1 RC.jar")
-  implementation files("$libDir/acidisland-3.0.9.1 RC.jar")
+  compileOnly files("$libDir/askyblock-3.0.9.1 RC.jar")
+  compileOnly files("$libDir/acidisland-3.0.9.1 RC.jar")
   // uSkyBlock
-  implementation files("$libDir/uSkyBlock-bukkit1.13-2.7.6-RC3.jar")
+  compileOnly files("$libDir/uSkyBlock-bukkit1.13-2.7.6-RC3.jar")
   // IslandWorld
-  implementation files("$libDir/IslandWorld-16.3.2.jar")
+  compileOnly files("$libDir/IslandWorld-16.3.2.jar")
   // BentoBox
-  implementation files("$libDir/BentoBox-1.16.0.jar")
-  implementation files("$libDir/BentoBox-Level-2.6.1.jar")
+  compileOnly files("$libDir/BentoBox-1.16.0.jar")
+  compileOnly files("$libDir/BentoBox-Level-2.6.1.jar")
   // SuperiorSkyblock
-  implementation files("$libDir/SuperiorSkyblock-1.5.2.jar")
+  compileOnly files("$libDir/SuperiorSkyblock-1.5.2.jar")
   // PlotSquared
-  implementation files("$libDir/PlotSquared-Bukkit-5.13.11.jar")
+  compileOnly files("$libDir/PlotSquared-Bukkit-5.13.11.jar")
   // PlotSquared Lecgacy
-  implementation files("$libDir/PlotSquared-Bukkit-3.823.jar")
+  compileOnly files("$libDir/PlotSquared-Bukkit-3.823.jar")
   // Lands
-  implementation files("$libDir/Lands-5.1.12.jar")
+  compileOnly files("$libDir/Lands-5.1.12.jar")
   // FabledSkyblock
-  implementation files("$libDir/fabledskyblock-2.1.0.jar")
+  compileOnly files("$libDir/fabledskyblock-2.1.0.jar")
 
   //Add dependencies here
-  implementation 'com.zaxxer:HikariCP:3.4.5'
+  compileOnly 'com.zaxxer:HikariCP:3.4.5'
 }
 
 shadowJar {

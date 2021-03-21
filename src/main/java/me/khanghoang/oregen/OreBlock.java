@@ -19,11 +19,19 @@ public class OreBlock {
         return chance;
     }
 
+    public void setChance(double chance) {
+        this.chance = chance;
+    }
+
     public int hashCode() {
         return name.hashCode();
     }
 
     public boolean equals(Object obj) {
         return (obj instanceof OreBlock && ((OreBlock) obj).name == this.name);
+    }
+
+    public OreBlock clone() {
+        return new OreBlock(name, chance);
     }
 }

@@ -2,42 +2,33 @@
 # Note: All the spawnrates should be less than 1.0 and the sum of them should be equals 1.0.
 # The permission of each generator is starts with 'oregen.' and follow by its name (e.g 'oregen.vip').
 # It must have one default generator. The default generator does not need any permission.
-
 # Run plugin in debug mode
-debug: false
-
+debug: true
 # Here you can define your ore generator machine.
 # The placeholders available are %oregen_label%, %oregen_name%, %oregen_permission%. 
 # You need to install PlaceholderAPI to get it to work.
 # The islandLevel attribute is the minimum insland level required to make the generator works.
 generators:
   default:
-    item: "STONE"
-    name: "default generator"
+    item: STONE
+    label: Máy quặng khởi đầu
+    symbol: '&7[S]' 
     blocks:
       STONE: 0.5
-      SANDSTONE: 0.4
-      IRON_ORE: 0.1
+      IRON_BLOCK: 0.1
+      LAPIS_BLOCK: 0.1
+      COAL_ORE: 0.3
     islandLevel: 0
-    default: true
-  beginer:
-    item: "IRON_BLOCK"
-    name: "Beginer tier"
-    label: "&7[B]"
+  generator1:
+    label: 'Gernerator 1'
+    item: IRON_BLOCK
+    symbol: '&f[I]' 
     blocks:
-      STONE: 0.2
-      SANDSTONE: 0.4
-      IRON_ORE: 0.4
-    islandLevel: 100
-  vip:
-    item: "GOLD_BLOCK"
-    name: "VIP tier"
-    label: "&2[V]"
-    blocks:
-      IRON_ORE: 0.6
-      STONE: 0.2
-      SANDSTONE: 0.2
+      STONE: 0.5
+      IRON_BLOCK: 0.15
+      LAPIS_BLOCK: 0.15
+      COAL_ORE: 0.2
     islandLevel: 0
 # Here you can define worlds where the generator should not work
 disabled-worlds:
-  - "world_nether"
+- world_nether

@@ -29,6 +29,7 @@ import java.util.Optional;
 
 import com.google.common.base.Preconditions;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -69,15 +70,7 @@ public class SmartInventory {
 
     public Inventory open(Player player, int page, Map<String, Object> properties) {	
         Optional<SmartInventory> oldInv = this.manager.getInventory(player);
-
-        oldInv.ifPresent(inv -> {
-            inv.getListeners().stream()
-                    .filter(listener -> listener.getType() == InventoryCloseEvent.class)
-                    .forEach(listener -> ((InventoryListener<InventoryCloseEvent>) listener)
-                            .accept(new InventoryCloseEvent(player.getOpenInventory())));
-
-            this.manager.setInventory(player, null);
-        });
+        oldInv.ifPresent(inv -> inv.close(player));
 
         InventoryContents contents = new InventoryContents.Impl(this, player);
         contents.pagination().page(page);

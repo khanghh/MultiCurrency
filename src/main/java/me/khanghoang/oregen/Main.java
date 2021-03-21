@@ -1,6 +1,6 @@
 package me.khanghoang.oregen;
 
-import me.khanghoang.oregen.chestgui.OreGenGUIManager;
+import me.khanghoang.oregen.gui.OreGenGUIManager;
 import me.khanghoang.oregen.commands.OreGenCommand;
 import me.khanghoang.oregen.config.Configuration;
 import me.khanghoang.oregen.hooks.HookInfo;

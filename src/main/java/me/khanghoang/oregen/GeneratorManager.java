@@ -11,10 +11,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.io.File;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.stream.Collectors;
+
+import com.google.common.collect.Lists;
 
 /**
  * @author khanghh on 2021/03/17
@@ -22,7 +27,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 public class GeneratorManager {
     
     private Main plugin;
-    private List<OreGenerator> generators;
+    private Map<String, OreGenerator> generators = new HashMap<>();
     private List<String> disabledWorlds;
     private HashMap<String, OreGenerator> cachedPlayers = new HashMap<>();
     private YamlConfig playersConfig;
@@ -40,11 +45,15 @@ public class GeneratorManager {
         try {
             readWriteLock.writeLock().lock();
             plugin.getConfig().reload();
-            generators = plugin.getConfig().getGenerators();
+            generators.clear();
+            for (OreGenerator gen : plugin.getConfig().getGenerators()) {
+                if (gen.isDefault || gen.name.equals("default")) {
+                    defaulGenerator = gen;
+                }
+                generators.put(gen.name, gen);
+            }
             disabledWorlds = plugin.getConfig().getDisabledWorlds();
-            if (generators.size() > 0) {
-                defaulGenerator = generators.get(0);
-            } else {
+            if (defaulGenerator == null) {
                 defaulGenerator = new OreGenerator();
             }
         } finally {
@@ -63,8 +72,11 @@ public class GeneratorManager {
         ConfigurationSection playersCfg = playersConfig.getConfigurationSection("players");
         if (playersCfg == null) return;
         for (String uuidStr : playersCfg.getKeys(false)) {
-            String genKey = playersCfg.getString(uuidStr + ".generator");
-            OreGenerator generator = findGeneratorById(genKey);
+            String genName = playersCfg.getString(uuidStr + ".generator");
+            OreGenerator generator = findGeneratorByName(genName);
+            if (generator == null) {
+                generator = defaulGenerator;
+            }
             addCachedGenerator(UUID.fromString(uuidStr), generator);
         }
     }
@@ -79,12 +91,12 @@ public class GeneratorManager {
         return playersConfig.getString("players." + pUuid.toString() + ".generator");
     }
 
-    private void savePlayerData(Player player, String genId) {
+    private void savePlayerData(Player player, String genName) {
         try {
             readWriteLock.writeLock().lock();
             UUID pUuid = player.getUniqueId();
-            plugin.logDebug("savePlayerData: %s -> %s", pUuid.toString(), genId);
-            playersConfig.set("players." + pUuid.toString() + ".generator", genId);
+            plugin.logDebug("savePlayerData: %s -> %s", pUuid.toString(), genName);
+            playersConfig.set("players." + pUuid.toString() + ".generator", genName);
             playersConfig.set("players." + pUuid.toString() + ".name", player.getName());
             playersConfig.save();
         } finally {
@@ -93,59 +105,52 @@ public class GeneratorManager {
     }
 
     private OreGenerator findPlayerGenerator(Player player) {
-        ListIterator<OreGenerator> it = generators.listIterator(generators.size());
-        while(it.hasPrevious()) {
-            OreGenerator generator = it.previous();
-            String genPerm = String.format("oregen.%s", generator.genId);
+        return generators.values().stream().filter(gen -> {
+            String genPerm = String.format("oregen.%s", gen.name);
             int islandLevel = plugin.getSkyBlockAPICached().getIslandLevel(player.getUniqueId());
-            if (player.hasPermission(genPerm) &&
-                islandLevel >= generator.islandLevel || generator.isDefault) {
-                return generator;
-            }
-        }
-        return defaulGenerator;
+            return player.hasPermission(genPerm) && islandLevel >= gen.islandLevel || gen.isDefault;
+        }).sorted((item, other) -> Integer.compare(item.rank, other.rank)).findFirst().orElse(defaulGenerator);
     }
 
     public List<String> getDisabledWorlds() {
         return disabledWorlds;
     }
 
-    public List<OreGenerator> getGenerators() {
+    public Map<String, OreGenerator> getGenerators() {
         return generators;
     }
 
-    public boolean addOreGenerator(OreGenerator newGen) {
-        boolean exists = generators.stream().filter(gen -> gen.genId.equals(newGen.genId)).findFirst().isPresent();
-        if (!exists) {
-            generators.add(newGen);
-            plugin.getConfig().setGenerators(generators);
+    public boolean addUpdateOreGenerator(OreGenerator newGen) {
+        generators.put(newGen.name, newGen);
+        saveGenerators();
+        return true;
+    }
+
+    public boolean removeOreGenerator(String genName) {
+        if (generators.containsKey(genName)) {
+            generators.remove(genName);
+            saveGenerators();
+            return true;
         }
         return false;
     }
 
-    public boolean removeOreGenerator(String genId) {
-        Iterator<OreGenerator> it = generators.iterator();
-        while(it.hasNext()) {
-            if (it.next().genId == genId) {
-                it.remove();
-                plugin.logDebug("deleted: %s", genId);
-                plugin.getConfig().setGenerators(generators);
-                return true;
-            }
-        }
-        return false;
+    private void saveGenerators() {
+        List<OreGenerator> genList = generators.values().stream()
+            .sorted((gen, other) -> Integer.compare(gen.rank, other.rank))
+            .collect(Collectors.toList());
+        plugin.getConfig().setGenerators(genList);
     }
 
-    public OreGenerator findGeneratorById(String genId) {
-        if (genId == null) return defaulGenerator;
-        for (OreGenerator generator: generators) {
-            if (generator.genId == genId) {
+    public OreGenerator findGeneratorByName(String genName) {
+        if (genName == null) return defaulGenerator;
+        for (OreGenerator generator: generators.values()) {
+            if (generator.name.equals(genName)) {
                 return generator;
             }
         }
-        return defaulGenerator;
+        return null;
     }
-
 
     public OreGenerator getPlayerGenerator(UUID pUuid) {
         // Get generator from cache
@@ -160,9 +165,9 @@ public class GeneratorManager {
         if (offlinePlayer.isOnline()) {
             Player player = offlinePlayer.getPlayer();
             OreGenerator generator = findPlayerGenerator(player);
-            String currentGenId = getPlayerData(pUuid);
-            if (!generator.genId.equals(currentGenId) && (currentGenId != null || !generator.isDefault)) {
-                savePlayerData(player, generator.genId);
+            String currentGenName = getPlayerData(pUuid);
+            if (!generator.name.equals(currentGenName) && (currentGenName != null || !generator.isDefault)) {
+                savePlayerData(player, generator.name);
             }
             addCachedGenerator(pUuid, generator);
             return generator;

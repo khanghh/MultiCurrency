@@ -20,5 +20,13 @@ public class Utils {
             return defaultValue; //Use default value if parsing failed
         }
     }
+
+    public static double parseDouble(String strValue, double defaultValue) {
+        try {
+            return Double.parseDouble(strValue);
+        } catch(NumberFormatException ex) {
+            return defaultValue; //Use default value if parsing failed
+        }
+    }
     
 }
