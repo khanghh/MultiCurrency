@@ -142,17 +142,18 @@ public class GeneratorManager {
     }
 
     public boolean updateOreGenerator(String genName, OreGenerator newGen) {
+        plugin.logDebug("updateOreGenerator: %s", genName);
         for (int i = 0; i < generators.size(); i++) {
             OreGenerator currentGen = generators.get(i);
+            plugin.logDebug("updateOreGenerator.currentGen: %s", currentGen.name);
             if (currentGen.name.equals(genName)) {
+                plugin.logDebug("updated: %s", genName);
                 generators.set(i, newGen);
+                plugin.getConfig().setGenerators(generators);
                 return true;
             }
         }
         return false;
-    }
-
-    public void saveOreGenerators() {
     }
 
     public OreGenerator findGeneratorByName(String genName) {

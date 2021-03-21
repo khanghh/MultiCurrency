@@ -7,14 +7,14 @@ import java.util.*;
  */
 
 public class OreGenerator {
-    public List<OreBlock> blocks;
     public String name;
     public String item;
     public String label;
     public String symbol;
     public int islandLevel = 0;
-    public boolean isDefault = false;
+    public List<OreBlock> blocks;
     public int rank = 0;
+    public boolean isDefault = false;
     public long lastUsed = 0;
     
     public OreGenerator(String name) {

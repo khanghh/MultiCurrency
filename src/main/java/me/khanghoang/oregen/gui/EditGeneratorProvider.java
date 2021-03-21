@@ -136,8 +136,9 @@ public class EditGeneratorProvider implements InventoryProvider {
         ItemStack item = getSaveItem();
         Consumer<InventoryClickEvent> saveConsumer = event -> {
             if (getTotalChance() == 1.0) {
-                editing = true;
-                // plugin.getManager().getGenerators().size()
+                plugin.getManager().updateOreGenerator(generator.name, generator);
+                editing = false;
+                drawSave(contents);
             }
         };
         contents.set(5, 4, ClickableItem.of(item, saveConsumer));
