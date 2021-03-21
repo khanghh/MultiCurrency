@@ -12,23 +12,25 @@ generators:
   default:
     item: STONE
     label: Máy quặng khởi đầu
-    symbol: '&7[S]' 
+    symbol: '&7[F]' 
     blocks:
       STONE: 0.5
       IRON_BLOCK: 0.1
       LAPIS_BLOCK: 0.1
       COAL_ORE: 0.3
     islandLevel: 0
-  generator1:
+    rank: 1000
+  vip:
     label: 'Gernerator 1'
     item: IRON_BLOCK
-    symbol: '&f[I]' 
+    symbol: '&f[&eS&f]' 
     blocks:
       STONE: 0.5
       IRON_BLOCK: 0.15
       LAPIS_BLOCK: 0.15
       COAL_ORE: 0.2
     islandLevel: 0
+    rank: 1
 # Here you can define worlds where the generator should not work
 disabled-worlds:
 - world_nether

@@ -11,6 +11,7 @@ public enum OreGenMessage {
     NOT_PLAYER("You must be a player to execute this command."),
     GENERATOR_NOT_FOUND("Ore generator &f%s &anot found."),
     GENERATOR_REMOVED("Ore generator &f%s &aremoved."),
+    PLAYER_OFFLINE("Player is offline."),
     CONFIG_RELOADED("Config reloaded!");
 
     public static final String PREFIX = "&f[&cAdvancedOreGen&f] &7» &a";

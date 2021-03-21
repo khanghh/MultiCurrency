@@ -11,15 +11,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 import java.io.File;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.stream.Collectors;
-
-import com.google.common.collect.Lists;
 
 /**
  * @author khanghh on 2021/03/17
@@ -27,7 +23,7 @@ import com.google.common.collect.Lists;
 public class GeneratorManager {
     
     private Main plugin;
-    private Map<String, OreGenerator> generators = new HashMap<>();
+    private List<OreGenerator> generators;
     private List<String> disabledWorlds;
     private HashMap<String, OreGenerator> cachedPlayers = new HashMap<>();
     private YamlConfig playersConfig;
@@ -45,17 +41,12 @@ public class GeneratorManager {
         try {
             readWriteLock.writeLock().lock();
             plugin.getConfig().reload();
-            generators.clear();
-            for (OreGenerator gen : plugin.getConfig().getGenerators()) {
-                if (gen.isDefault || gen.name.equals("default")) {
-                    defaulGenerator = gen;
-                }
-                generators.put(gen.name, gen);
-            }
+            generators = plugin.getConfig().getGenerators();
             disabledWorlds = plugin.getConfig().getDisabledWorlds();
-            if (defaulGenerator == null) {
-                defaulGenerator = new OreGenerator();
-            }
+            defaulGenerator = generators.stream()
+                .filter(gen -> gen.isDefault)
+                .findFirst()
+                .orElse(new OreGenerator());
         } finally {
             readWriteLock.writeLock().unlock();
         }
@@ -105,46 +96,68 @@ public class GeneratorManager {
     }
 
     private OreGenerator findPlayerGenerator(Player player) {
-        return generators.values().stream().filter(gen -> {
-            String genPerm = String.format("oregen.%s", gen.name);
+        ListIterator<OreGenerator> it = generators.listIterator(generators.size());
+        while(it.hasPrevious()) {
+            OreGenerator generator = it.previous();
+            String genPerm = String.format("oregen.%s", generator.name);
             int islandLevel = plugin.getSkyBlockAPICached().getIslandLevel(player.getUniqueId());
-            return player.hasPermission(genPerm) && islandLevel >= gen.islandLevel || gen.isDefault;
-        }).sorted((item, other) -> Integer.compare(item.rank, other.rank)).findFirst().orElse(defaulGenerator);
+            if (player.hasPermission(genPerm) && generator.rank > 0 &&
+                islandLevel >= generator.islandLevel || generator.isDefault) {
+                return generator;
+            }
+        }
+        return defaulGenerator;
     }
 
     public List<String> getDisabledWorlds() {
         return disabledWorlds;
     }
 
-    public Map<String, OreGenerator> getGenerators() {
-        return generators;
+    public List<OreGenerator> getGenerators() {
+        return generators.stream()
+            .sorted((gen, other) -> Integer.compare(gen.rank, other.rank))
+            .collect(Collectors.toList());
     }
 
-    public boolean addUpdateOreGenerator(OreGenerator newGen) {
-        generators.put(newGen.name, newGen);
-        saveGenerators();
-        return true;
-    }
-
-    public boolean removeOreGenerator(String genName) {
-        if (generators.containsKey(genName)) {
-            generators.remove(genName);
-            saveGenerators();
-            return true;
+    public boolean addOreGenerator(OreGenerator newGen) {
+        boolean exists = generators.stream().filter(gen -> gen.name.equals(newGen.name)).findFirst().isPresent();
+        if (!exists) {
+            generators.add(newGen);
+            plugin.getConfig().setGenerators(generators);
         }
         return false;
     }
 
-    private void saveGenerators() {
-        List<OreGenerator> genList = generators.values().stream()
-            .sorted((gen, other) -> Integer.compare(gen.rank, other.rank))
-            .collect(Collectors.toList());
-        plugin.getConfig().setGenerators(genList);
+    public boolean removeOreGenerator(String genName) {
+        Iterator<OreGenerator> it = generators.iterator();
+        while(it.hasNext()) {
+            if (it.next().name == genName) {
+                it.remove();
+                plugin.logDebug("deleted: %s", genName);
+                plugin.getConfig().setGenerators(generators);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean updateOreGenerator(String genName, OreGenerator newGen) {
+        for (int i = 0; i < generators.size(); i++) {
+            OreGenerator currentGen = generators.get(i);
+            if (currentGen.name.equals(genName)) {
+                generators.set(i, newGen);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void saveOreGenerators() {
     }
 
     public OreGenerator findGeneratorByName(String genName) {
         if (genName == null) return defaulGenerator;
-        for (OreGenerator generator: generators.values()) {
+        for (OreGenerator generator : generators) {
             if (generator.name.equals(genName)) {
                 return generator;
             }

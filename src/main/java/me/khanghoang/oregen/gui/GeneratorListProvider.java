@@ -13,11 +13,8 @@ import me.khanghoang.smartinv.content.SlotPos;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
-
-import com.comphenix.protocol.utility.Util;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -33,13 +30,9 @@ public class GeneratorListProvider implements InventoryProvider {
 
     public GeneratorListProvider(Main plugin) {
         this.plugin = plugin;
-        // ItemMeta meta = menuBg.getItemMeta();
-        // meta.addEnchant(Enchantment.DURABILITY, 1, false);
-        // menuBg.setItemMeta(meta);
     }
 
     private ItemStack getOreGenItem(OreGenerator generator) {
-        plugin.logDebug("generator: %s", generator.item);
         Material itemType = Material.getMaterial(generator.item);
         if (itemType == null) itemType = Material.COBBLESTONE;
         ItemStack item = new ItemStack(itemType, 1);
@@ -48,6 +41,9 @@ public class GeneratorListProvider implements InventoryProvider {
         List<String> lore = new ArrayList<>();
         lore.add(Utils.format("&2Total ores: &a&l%s", generator.blocks.size()));
         lore.add(Utils.format("&2Label: &f%s", generator.label));
+        lore.add(Utils.format("&2Name: &5%s", generator.name));
+        lore.add(Utils.format("&2Symbol: %s", generator.symbol));
+        lore.add(Utils.format("&2Rank: &f%s", generator.rank));
         lore.add(Utils.format("&oLeft click &7&oto edit"));
         lore.add(Utils.format("&oRight click &7&oto remove"));
         itemMeta.setLore(lore);
@@ -85,7 +81,7 @@ public class GeneratorListProvider implements InventoryProvider {
     private OreGenerator getNewGenerator() {
         int id = 0;
         String name = "generator" + id;
-        for (OreGenerator generator : plugin.getManager().getGenerators().values()) {
+        for (OreGenerator generator : plugin.getManager().getGenerators()) {
             if (generator.name.startsWith("generator")) {
                 String idStr = generator.name.replaceAll("generator", "");
                 id = Utils.parseInt(idStr, id + 1);
@@ -108,7 +104,7 @@ public class GeneratorListProvider implements InventoryProvider {
                 event.getWhoClicked().setItemOnCursor(null);
                 OreGenerator newGen = getNewGenerator();
                 newGen.item = cursorItem.getType().name();
-                plugin.getManager().addUpdateOreGenerator(newGen);
+                plugin.getManager().addOreGenerator(newGen);
                 drawOreGeneratorItem(contents, newGen);
             }
         };
@@ -125,7 +121,7 @@ public class GeneratorListProvider implements InventoryProvider {
 
     @Override
     public void init(Player player, InventoryContents contents) {
-        for (OreGenerator generator : plugin.getManager().getGenerators().values()) {
+        for (OreGenerator generator : plugin.getManager().getGenerators()) {
             drawOreGeneratorItem(contents, generator);
         }
         drawGlass(contents, 2, 0);

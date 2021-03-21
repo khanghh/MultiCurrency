@@ -1,7 +1,8 @@
 package me.khanghoang.oregen.commands;
 
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
@@ -12,8 +13,10 @@ import me.khanghoang.oregen.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
-public class OreGenCommand implements CommandExecutor, TabExecutor {
+public class OreGenCommand implements TabExecutor {
 
     private Main plugin;
 
@@ -35,11 +38,11 @@ public class OreGenCommand implements CommandExecutor, TabExecutor {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 1) {
-            return getSuggestions(args[0], "debug", "reload", "edit", "delete");
+            return getSuggestions(args[0], "debug", "reload", "edit", "delete", "inspect");
         } else if (args.length == 2) {
             if (args[1].equals("edit") || args[1].equals("delete")) {
                 List<String> suggestions = new ArrayList<>();
-                for (OreGenerator gen: plugin.getManager().getGenerators().values()) {
+                for (OreGenerator gen: plugin.getManager().getGenerators()) {
                     suggestions.add(gen.name);
                 }
                 return suggestions;
@@ -95,6 +98,37 @@ public class OreGenCommand implements CommandExecutor, TabExecutor {
         return false;
     }
 
+    private void sendInspectMessage(CommandSender sender, Player player) {
+        sender.sendMessage(Utils.format("&c====== INFO %s =======", player.getName()));
+        OfflinePlayer offlinePlayer = plugin.getSkyBlockAPICached().getIslandOwner(player.getLocation());
+        OreGenerator generator = plugin.getManager().getPlayerGenerator(offlinePlayer.getUniqueId());
+        sender.sendMessage(Utils.format("&2Skyblock Plugin: &a" + plugin.getSkyBlockAPICached().getHookName()));
+        sender.sendMessage(Utils.format("&2Island level: &a" + plugin.getSkyBlockAPICached().getIslandLevel(player.getUniqueId())));
+        sender.sendMessage(Utils.format("&2Island owner: &a" + offlinePlayer.getName()));
+        sender.sendMessage(Utils.format("&3Generator name: &a" + generator.label));
+        sender.sendMessage(Utils.format("&3Generator label: &a" + generator.label));
+        sender.sendMessage(Utils.format("&3Generator symbol: &a" + generator.symbol));
+        sender.sendMessage(Utils.format("&3Generator need islevel: &a" + generator.islandLevel));
+    }
+
+    private boolean cmdInspect(CommandSender sender, String[] args) {
+        if (args.length > 1) {
+            String playerName = args[1];
+            Player player = Bukkit.getPlayerExact(playerName);
+            if (player == null) {
+                OreGenMessage.PLAYER_OFFLINE.send(sender);
+                return false;
+            }
+            sendInspectMessage(sender, player);
+            return true;
+            // sender.sendMessage(String.format("§c====== INFO %s =======", player.getName()));
+        } else if (sender instanceof Player) {
+            Player player = (Player)sender;
+            sendInspectMessage(sender, player);
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -120,6 +154,8 @@ public class OreGenCommand implements CommandExecutor, TabExecutor {
                 return cmdEdit(sender, args);
             case "delete":
                 return cmdDelete(sender, args);
+            case "inspect":
+                return cmdInspect(sender, args);
             default:
                 sendUsage(sender);
                 return false;

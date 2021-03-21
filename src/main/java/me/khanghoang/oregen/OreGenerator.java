@@ -7,7 +7,7 @@ import java.util.*;
  */
 
 public class OreGenerator {
-    public Set<OreBlock> blocks;
+    public List<OreBlock> blocks;
     public String name;
     public String item;
     public String label;
@@ -18,7 +18,7 @@ public class OreGenerator {
     public long lastUsed = 0;
     
     public OreGenerator() {
-        this.blocks = new HashSet<>();
+        this.blocks = new ArrayList<>();
         this.label = null;
     }
 
@@ -26,19 +26,19 @@ public class OreGenerator {
         this.name = name;
         this.label = name;
         this.item = "COBBLESTONE";
-        this.blocks = new HashSet<>();
+        this.blocks = new ArrayList<>();
     }
 
-    public OreGenerator(String name, String item, String label, String symbol, int islandLevel, Set<OreBlock> blocks, boolean isDefault) {
+    public OreGenerator(String name, String item, String label, String symbol, int islandLevel, List<OreBlock> blocks, int rank) {
         this.name = name;
         this.item = item;
         this.label = label;
         this.symbol = symbol;
         this.islandLevel = islandLevel;
         this.blocks = blocks;
-        this.isDefault = isDefault;
+        this.rank = rank;
     }
-    
+
     public OreBlock generate() {
         Random random = new Random();
         double val = random.nextDouble();
@@ -72,10 +72,10 @@ public class OreGenerator {
     }
 
     public OreGenerator clone() {
-        Set<OreBlock> cloneBlocks = new HashSet<>();
+        List<OreBlock> cloneBlocks = new ArrayList<>();
         for (OreBlock item: blocks) {
             cloneBlocks.add(item.clone());
         }
-        return new OreGenerator(name, item, label, symbol, islandLevel, cloneBlocks, isDefault);
+        return new OreGenerator(name, item, label, symbol, islandLevel, cloneBlocks, rank);
     }
 }

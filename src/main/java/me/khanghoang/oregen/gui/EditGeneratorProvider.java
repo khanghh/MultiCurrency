@@ -6,13 +6,11 @@ import me.khanghoang.oregen.OreGenerator;
 import me.khanghoang.oregen.Utils;
 import me.khanghoang.oregen.gui.SignGUIManager.SignGUI;
 import me.khanghoang.smartinv.ClickableItem;
-import me.khanghoang.smartinv.SmartInventory;
 import me.khanghoang.smartinv.content.InventoryContents;
 import me.khanghoang.smartinv.content.InventoryProvider;
 import me.khanghoang.smartinv.content.SlotPos;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -92,7 +90,6 @@ public class EditGeneratorProvider implements InventoryProvider {
     }
 
     private ItemStack getOreBlockItem(OreBlock oreBlock) {
-        plugin.logDebug("getOreBlockItem: %s", oreBlock.name);
         Material itemType = Material.getMaterial(oreBlock.name);
         if (itemType == null) itemType = Material.BARRIER;
         ItemStack item = new ItemStack(itemType, 1);
@@ -138,6 +135,10 @@ public class EditGeneratorProvider implements InventoryProvider {
     private void drawSave(InventoryContents contents) {
         ItemStack item = getSaveItem();
         Consumer<InventoryClickEvent> saveConsumer = event -> {
+            if (getTotalChance() == 1.0) {
+                editing = true;
+                // plugin.getManager().getGenerators().size()
+            }
         };
         contents.set(5, 4, ClickableItem.of(item, saveConsumer));
     }

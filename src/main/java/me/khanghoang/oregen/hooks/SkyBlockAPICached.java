@@ -65,6 +65,10 @@ public class SkyBlockAPICached {
 		}
 		return Optional.empty();
 	}
+
+    public String getHookName() {
+        return this.hook.getClass().getName();
+    }
 	
 	public OfflinePlayer getIslandOwner(Location loc) {
         Optional<UUID> uuid = getIslandOwnerUUID(loc);
