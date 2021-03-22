@@ -44,7 +44,6 @@ public class NamePlaceholder extends PlaceholderExpansion {
 
     @Override
     public String onRequest(OfflinePlayer player, String label) {
-        Bukkit.getLogger().info("onRequest: " + label);
         OreGenerator generator = plugin.getManager().getPlayerGenerator(player.getUniqueId());
         switch (label) {
         case "name":
@@ -52,8 +51,6 @@ public class NamePlaceholder extends PlaceholderExpansion {
         case "label":
             return generator.label;
         case "symbol":
-            Bukkit.getLogger().info("generator.symbol: " + generator.symbol);
-            Bukkit.getLogger().info("generator.name: " + generator.name);
             return generator.symbol;
         case "item":
             return generator.item;
