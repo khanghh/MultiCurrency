@@ -1,36 +1,43 @@
-# AdvancedOregen 1.0.1 developed by khanghoang
-# Note: All the spawnrates should be less than 1.0 and the sum of them should be equals 1.0.
-# The permission of each generator is starts with 'oregen.' and follow by its name (e.g 'oregen.vip').
-# It must have one default generator. The default generator does not need any permission.
-# Run plugin in debug mode
+# MultiCurrency 0.1.0 developed by khanghoang
 debug: true
-# Here you can define your ore generator machine.
-# The placeholders available are %oregen_label%, %oregen_name%, %oregen_permission%. 
-# You need to install PlaceholderAPI to get it to work.
-# The islandLevel attribute is the minimum insland level required to make the generator works.
-generators:
-  default:
-    item: STONE
-    label: Máy quặng khởi đầu
-    symbol: '&7[F]' 
-    blocks:
-      STONE: 0.5
-      IRON_BLOCK: 0.1
-      LAPIS_BLOCK: 0.1
-      COAL_ORE: 0.3
-    islandLevel: 0
-    rank: 1000
-  vip:
-    label: 'Gernerator 1'
-    item: IRON_BLOCK
-    symbol: '&f[&eS&f]' 
-    blocks:
-      STONE: 0.5
-      IRON_BLOCK: 0.15
-      LAPIS_BLOCK: 0.15
-      COAL_ORE: 0.2
-    islandLevel: 0
-    rank: 1
-# Here you can define worlds where the generator should not work
-disabled-worlds:
-- world_nether
+# Set datasource of plugin. Available datasource are: yaml, mysql, sqlite
+datasource: mysql
+# MySQL configuration
+mysql:
+  tablePrefix: bank_
+  host: localhost
+  port: 3306
+  database: mc
+  username: mineviet
+  password: 123456
+  maxPoolSize: 10
+
+currencies:
+  tiengiay:
+    name: "tiền giấy"
+    symbol: "$"
+    denominations: 
+      1000: "1k"
+      5000: "5k"
+      10000: "10k"
+      20000: "20k"
+      50000: "50k"
+      100000: "100k"
+      200000: "200k"
+      500000: "500k"
+      1000000: "1 triệu"
+    item: "PAPER"
+    lores:
+      - "aaaa"
+      - "aaaa"
+      - "aaaa"
+    default: true
+  xu:
+    name: "xu"
+    item: "SUNFLOWER"
+    lores:
+      - "aaaa"
+      - "aaaa"
+      - "aaaa"
+    
+    

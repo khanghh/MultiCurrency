@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>AdvancedOreGen</name>
-	<comment>Project AdvancedOreGen created by Buildship.</comment>
+	<name>PlayerPoint</name>
+	<comment>Project PlayerPoint created by Buildship.</comment>
 	<projects>
 	</projects>
 	<buildSpec>
@@ -22,7 +22,7 @@
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1616002094029</id>
+			<id>1621747294887</id>
 			<name></name>
 			<type>30</type>
 			<matcher>

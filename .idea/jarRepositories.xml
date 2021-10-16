@@ -61,5 +61,10 @@
       <option name="name" value="maven7" />
       <option name="url" value="https://mvn.intellectualsites.com/content/groups/public/" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven8" />
+      <option name="name" value="maven8" />
+      <option name="url" value="https://repo.minecaftvn.com/releases" />
+    </remote-repository>
   </component>
 </project>
